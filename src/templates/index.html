@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-4 col-md-6">
+        <a href="/admin" style="text-decoration: none;" class="text-white">
+            <div class="card p-3 bg-danger">
+                <div class="card-body text-center">
+                    <h1>Admin Page</h1>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <a href="{% url 'patient-create' %}" style="text-decoration: none;" class="text-white">
+            <div class="card p-3 bg-success">
+                <div class="card-body text-center">
+                    <h1>Create Patient</h1>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <a href="{% url 'all-patients' %}" style="text-decoration: none;" class="text-white">
+            <div class="card p-3 bg-primary">
+                <div class="card-body text-center">
+                    <h1>Patients List</h1>
+                </div>
+            </div>
+        </a>
+    </div>
+    </div>
+</div>
+{% endblock content %}
+
+patient-create
+patient-report
+all-patients
+create-medicine
+patient-detail
