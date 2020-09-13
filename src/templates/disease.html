@@ -2,6 +2,9 @@
 {% load crispy_forms_tags %}
 
 {%block content%}
+<style>
+
+</style>
 <div class="row">
   <h1 class="display-4 mb-3" style="margin:0; text-align:center;">
 <span style="font-size:x-large">ID: {{patient.id}}</span>
@@ -19,7 +22,7 @@
         {% for disease in diseases %}
         <form method="POST">
             {% csrf_token %}
-            <div class="card p-3 mt-3">
+            <div class="card p-3 mt-3 bg-light">
                 <h4>
                     {{disease.name}}
                 </h4>
@@ -39,12 +42,16 @@
       <div class="card p-4">
         <h2>Prescription</h2>
         <form method="POST">{% csrf_token %}
-            {{ formset|crispy }}
+          {{ formset.management_form }}
+          {% for form in formset %}
+          <tr><td><ul class="card p-3 bg-light">{{ form|crispy }}</ul></td></tr>
+          {% endfor %}
             <button class="btn btn-primary btn-lg mt-3 btn-block" type="submit" name="medicineintake">Save</button>
         </form>
       </div>
   </div>
 </div>
     
+
 
 {%endblock content%}

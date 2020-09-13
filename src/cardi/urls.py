@@ -5,7 +5,7 @@ from patient.views import (create_patient,
                             patient_report, 
                             all_patients, 
                             search, 
-                            create_medicine, 
+                            # create_medicine, 
                             delete_patient,
                             add_disease,
                             index,
@@ -19,7 +19,7 @@ urlpatterns = [
     path('patient/report/<id>', patient_report, name='patient-report'),
     path('patient/all/', all_patients, name='all-patients'),
     path('patient/search/', search, name='search'),
-    path('medicine/create/', create_medicine, name='create-medicine'),
+    # path('medicine/create/', create_medicine, name='create-medicine'),
     path('patient/delete/<id>', delete_patient, name='delete-patient'),
     path('patient/detail/<id>', add_disease, name="patient-detail")
 ]

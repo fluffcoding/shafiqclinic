@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
-from .forms import PatientForm, DiseaseForm, PatientDiseaseForm, MedicineIntakeForm, MedicineForm
-from .models import Patient, Disease, Medicine, MedicineIntake
+from .forms import PatientForm, DiseaseForm, PatientDiseaseForm, MedicineIntakeForm
+from .models import Patient, Disease, MedicineIntake
 
 from django.forms import inlineformset_factory
 
@@ -10,7 +10,11 @@ def index(request):
 
 
 def create_patient(request):
-    if request.method == 'POST':
+    patient_form = PatientForm(request.POST or None)
+    if request.method == "POST":
+        if patient_form.is_valid():
+            patient_form.save()
+    '''if request.method == 'POST':
         if 'add_disease' in request.POST:
             disease_form = DiseaseForm(request.POST, prefix='disease')
             if disease_form.is_valid():
@@ -23,17 +27,20 @@ def create_patient(request):
             disease_form = DiseaseForm(prefix='disease')
     else:
         disease_form = DiseaseForm(prefix='disease')
-        patient_form = PatientForm(prefix='patient')
+        patient_form = PatientForm(prefix='patient')'''
     patients = Patient.objects.all()
-    diseases = Disease.objects.all()
+    # diseases = Disease.objects.all()
     objects = list( Patient.objects.all())
+    print(objects)
     objects.reverse()
-    final = objects[:3]
+    print(objects)
+    final = objects[:5]
+    print(final)
     context = {
         'patient_form': patient_form,
         'patients':patients,
-        'disease_form':disease_form,
-        'diseases': diseases,
+        # 'disease_form':disease_form,
+        # 'diseases': diseases,
         'final': final,
     }
     return render(request, 'create_patient.html', context)
@@ -122,17 +129,17 @@ def search(request):
     return render(request,"search.html", context)
     
 
-def create_medicine(request):
-    medicines = Medicine.objects.all()
-    form = MedicineForm(request.POST or None)
-    if form.is_valid():
-        form.save()
+# def create_medicine(request):
+#     medicines = Medicine.objects.all()
+#     form = MedicineForm(request.POST or None)
+#     if form.is_valid():
+#         form.save()
 
-    context = {
-        'form': form,
-        'medicines': medicines,
-    }
-    return render(request, 'create_medicine.html', context)
+#     context = {
+#         'form': form,
+#         'medicines': medicines,
+#     }
+#     return render(request, 'create_medicine.html', context)
 
 
 def delete_patient(request, id):
@@ -166,7 +173,6 @@ def add_disease(request,id):
             
     else:
         formset = MedicineFormset(instance=patient)
-        
 
     context = {
         'patient': patient,

@@ -24,14 +24,6 @@ class Patient(models.Model):
     def __str__(self):
         return self.name
 
-class Medicine(models.Model):
-    name = models.CharField(max_length=100)
-    company = models.CharField(max_length=50)
-
-
-    def __str__(self):
-        return self.name
-
 
 
 class Disease(models.Model):
@@ -43,7 +35,7 @@ class Disease(models.Model):
     
 
 class MedicineIntake(models.Model):
-    medicine = models.ForeignKey(Medicine,on_delete=models.CASCADE, null=True)
+    medicine = models.CharField(max_length=100, blank=True, null=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True, blank=True)
     disease = models.ForeignKey(Disease, on_delete=models.CASCADE, null=True, blank=True)
     dose = models.CharField(max_length=20)
@@ -60,4 +52,3 @@ class Prescription(models.Model):
     medicine = models.ManyToManyField(MedicineIntake)
     time_created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 '''
-
