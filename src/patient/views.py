@@ -31,11 +31,8 @@ def create_patient(request):
     patients = Patient.objects.all()
     # diseases = Disease.objects.all()
     objects = list( Patient.objects.all())
-    print(objects)
     objects.reverse()
-    print(objects)
     final = objects[:5]
-    print(final)
     context = {
         'patient_form': patient_form,
         'patients':patients,

@@ -14,8 +14,9 @@ medicine_quantity = {
 class Patient(models.Model):
     name = models.CharField(max_length=50)
     age = models.IntegerField()
-    phone_number = models.IntegerField()
     gender = models.CharField(choices=genders,max_length=1)
+    # phone_number = models.IntegerField()
+    address = models.CharField(max_length=300, blank=True, null=True)
     disease = models.ManyToManyField("Disease", blank=True)
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     #prescription = models.ManyToManyField("MedicineIntake", blank=True)
@@ -34,8 +35,17 @@ class Disease(models.Model):
         return self.name
     
 
+class Medicine(models.Model):
+    name = models.CharField(max_length=100)
+
+
+    def __str__(self):
+        return self.name
+
+
 class MedicineIntake(models.Model):
-    medicine = models.CharField(max_length=100, blank=True, null=True)
+    # medicine = models.CharField(max_length=100, blank=True, null=True)
+    medicine = models.ForeignKey(Medicine, on_delete=models.CASCADE, null=True, blank=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True, blank=True)
     disease = models.ForeignKey(Disease, on_delete=models.CASCADE, null=True, blank=True)
     dose = models.CharField(max_length=20)
@@ -44,8 +54,8 @@ class MedicineIntake(models.Model):
 
 
     def __str__(self):
-        return str(self.medicine.name) + " - " + str(self.medicine.company)  + " - " + self.quantity   + " times a day - " + self.dose  + " - " + str(self.duration) + " days."
-
+        # return str(self.medicine.name) + " - " + str(self.medicine.company)  + " - " + self.quantity   + " times a day - " + self.dose  + " - " + str(self.duration) + " days."
+        return self.medicine
 
 '''
 class Prescription(models.Model):
